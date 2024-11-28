@@ -1,2 +1,2 @@
 # SpaceGeodesy
-Repo to collaborate on Space Geodesy assignment TU Berlin.
+Repo to collaborate on Space Geodesy course's assignments TU Berlin.
