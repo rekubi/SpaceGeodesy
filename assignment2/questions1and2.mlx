@@ -1,0 +1,107 @@
+clc
+clear all
+
+% Testing the rotation matrices
+R1 = rot3d(2*pi, 1);  % Rotation by 2*pi about x-axis (should return the identity matrix)
+R2 = rot3d(pi, 2);    % Rotation by pi about y-axis (should flip the y-axis)
+R3 = rot3d(pi/2, 3);  % Rotation by pi/2 about z-axis (anticlockwise rotation)
+% Display rotation matrices
+disp('Rotation Matrix R1: Rotation about the x-axis (axis=1)');
+disp(R1);
+
+disp('Rotation Matrix R2: Rotation about the y-axis (axis=2)');
+disp(R2);
+
+disp('Rotation Matrix R3: Rotation about the z-axis (axis=3)');
+disp(R3);
+
+disp(['The rotation is anti-clockwise ' ...
+       'for positive angles when viewed along the positive direction ' ...
+       'of the rotation axis.']);
+
+
+
+
+%Q2:
+
+% Testing the reflection matrices
+M1 = mir3d(1);  % Reflection about the x-axis
+M2 = mir3d(2);  % Reflection about the y-axis
+M3 = mir3d(3);  % Reflection about the z-axis
+M1M1=M1*M1;
+M2M2=M2*M2;
+M3M3=M3*M3;
+M1M2M3=M1*M2*M3;
+% Display reflection matrices with explanations
+disp('Reflection Matrix M1: Reflection about the x-axis');
+disp(M1);
+
+disp('Reflection Matrix M2: Reflection about the y-axis');
+disp(M2);
+
+disp('Reflection Matrix M3: Reflection about the z-axis');
+disp(M3);
+
+fprintf('Multiplication of reflection matrix with itself:\n'); 
+disp(M1M1);
+disp(M2M2);
+disp(M3M3);
+fprintf('Multiplication of matrices M1,M2,M3:\n');
+disp(M1M2M3);
+function R_i = rot3d(angle, axis)
+    % Function to compute a 3D rotation matrix for a given angle and axis
+    % Inputs:
+    %   angle - the rotation angle in radians
+    %   axis - the axis of rotation (1 for x, 2 for y, 3 for z)
+    % Output:
+    %   R_i - 3x3 rotation matrix
+    
+    % Ensure angle is a scalar and axis is valid
+    if nargin < 2
+        error('Not enough input arguments. Provide both angle and axis.');
+    end
+    
+    if axis == 1  % Rotation about the x-axis (e1)
+        R_i = [1, 0, 0; 
+               0, cos(angle), -sin(angle);
+               0, sin(angle), cos(angle)];
+    elseif axis == 2  % Rotation about the y-axis (e2)
+        R_i = [cos(angle), 0, sin(angle); 
+               0, 1, 0; 
+               -sin(angle), 0, cos(angle)];
+    elseif axis == 3  % Rotation about the z-axis (e3)
+        R_i = [cos(angle), -sin(angle), 0; 
+               sin(angle), cos(angle), 0; 
+               0, 0, 1];
+    else
+        error('Axis must be 1, 2, or 3');
+    end
+end
+
+
+
+function M_i = mir3d(axis)
+    % Function to compute a 3D reflection matrix for a given mirror axis
+    % Inputs:
+    %   axis - the axis of reflection (1 for x, 2 for y, 3 for z)
+    % Output:
+    %   M_i - 3x3 reflection matrix
+    
+    % Define the reflection matrix based on the mirror axis
+    if axis == 1  % Reflection about the x-axis
+        M_i = [-1, 0, 0;
+               0, 1, 0;
+               0, 0, 1];
+    elseif axis == 2  % Reflection about the y-axis
+        M_i = [1, 0, 0;
+               0, -1, 0;
+               0, 0, 1];
+    elseif axis == 3  % Reflection about the z-axis
+        M_i = [1, 0, 0;
+               0, 1, 0;
+               0, 0, -1];
+    else
+        error('Axis must be 1, 2, or 3');
+    end
+end
+
