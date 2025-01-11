@@ -36,8 +36,8 @@ function W = polar_motion_matrix(year, month, day, hour, minute)
     yp_interp = interp1(dates, yp, targetDateTime);
     
     % Compute the rotation matrices
-    R1 = [1, 0, 0; 0, cos(-yp_interp), sin(-yp_interp); 0, -sin(-yp_interp), cos(-yp_interp)]; % around x-axis
-    R2 = [cos(-xp_interp), 0, -sin(-xp_interp); 0, 1, 0; sin(-xp_interp), 0, cos(-xp_interp)]; % around y-axis
+    R1 = rot3d(yp_interp, 1); % around x-axis
+    R2 = rot3d(xp_interp, 2); % around y-axis
     
     % Compute the polar motion matrix
     W = R2 * R1;
